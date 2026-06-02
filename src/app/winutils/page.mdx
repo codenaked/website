@@ -1,0 +1,156 @@
+export const metadata = {
+  title: "WinUtils: shell-powered CLI tools for Windows 95",
+  description:
+    "A blog post about WinUtils, a set of Windows 95-era file utilities originally built in 1996-1997.",
+}
+
+<div className="mx-auto max-w-4xl px-6 py-16 sm:px-8 lg:px-12">
+  <h1 className="not-prose font-title text-5xl leading-tight text-paper sm:text-6xl">
+    WinUtils: shell-powered CLI tools for Windows 95
+  </h1>
+
+  <a
+    href="https://github.com/codenaked/winutils"
+    className="not-prose mt-4 inline-flex items-center gap-2 rounded-full border border-paper/15 bg-paper/5 px-4 py-2 text-sm text-paper/80 transition hover:border-lime/40 hover:text-lime"
+  >
+    <span aria-hidden="true">→</span>
+    github.com/codenaked/winutils
+  </a>
+
+  <div className="not-prose mt-8 text-lg leading-8 text-paper/80">
+    WinUtils started in 1996-1997 as a way to build my programming chops. I was poking
+    around the Windows 95 shell APIs, found the file operation functions, and thought
+    it would be cool to have CLI tools that called them instead of doing raw file I/O.
+    The payoff was practical: because the operations went through the shell, the same
+    confirmation prompts, progress dialogs, and Recycle Bin behavior you got from
+    Windows Explorer came along for free.
+  </div>
+
+  <div className="not-prose mt-12 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <div className="flex items-center gap-4 rounded-2xl border border-paper/10 bg-[#121618] p-5 text-paper shadow-[0_18px_40px_rgba(0,0,0,0.25)]">
+      <img src="/winutils/wincopy.png" alt="WinCopy icon" className="h-12 w-12 [image-rendering:pixelated]" />
+      <h2 className="font-title text-2xl">WinCopy</h2>
+    </div>
+
+    <div className="flex items-center gap-4 rounded-2xl border border-paper/10 bg-[#121618] p-5 text-paper shadow-[0_18px_40px_rgba(0,0,0,0.25)]">
+      <img src="/winutils/windel.png" alt="WinDel icon" className="h-12 w-12 [image-rendering:pixelated]" />
+      <h2 className="font-title text-2xl">WinDel</h2>
+    </div>
+
+    <div className="flex items-center gap-4 rounded-2xl border border-paper/10 bg-[#121618] p-5 text-paper shadow-[0_18px_40px_rgba(0,0,0,0.25)]">
+      <img src="/winutils/winmove.png" alt="WinMove icon" className="h-12 w-12 [image-rendering:pixelated]" />
+      <h2 className="font-title text-2xl">WinMove</h2>
+    </div>
+
+    <div className="flex items-center gap-4 rounded-2xl border border-paper/10 bg-[#121618] p-5 text-paper shadow-[0_18px_40px_rgba(0,0,0,0.25)]">
+      <img src="/winutils/winren.png" alt="WinRen icon" className="h-12 w-12 [image-rendering:pixelated]" />
+      <h2 className="font-title text-2xl">WinRen</h2>
+    </div>
+  </div>
+
+  ## The shell APIs behind it
+
+  The interesting part of the project, at least to me at the time, was that almost
+  none of the heavy lifting was mine. The shell already knew how to copy, move,
+  delete, and rename files the way users expected. WinUtils was mostly a thin CLI
+  front end for those calls:
+
+  - [`SHFileOperation`](https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shfileoperationa): the workhorse for copy, move, delete, and rename, including Recycle Bin support via `FOF_ALLOWUNDO`
+  - [`SHFILEOPSTRUCT`](https://learn.microsoft.com/en-us/windows/win32/api/shellapi/ns-shellapi-shfileopstructa): the struct that configures the operation, source/destination paths, and flags
+  - [`FO_COPY` / `FO_DELETE` / `FO_MOVE` / `FO_RENAME`](https://learn.microsoft.com/en-us/windows/win32/api/shellapi/ns-shellapi-shfileopstructa#members): the operation codes used by each utility
+  - [`SHGetFileInfo`](https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shgetfileinfoa): handy for grabbing icons and display names that matched what Explorer was showing
+
+  Routing through `SHFileOperation` is what gave the tools their best property: undo.
+  Files removed by `windel` landed in the Recycle Bin, and a misfired `winmove` could
+  be reversed from Explorer like any other shell action.
+
+  ## Usage and switches
+
+  Each utility took its source/target arguments first and then any number of single-letter
+  switches prefixed with `/`. The switches mapped almost directly to `SHFileOperation`
+  flags, plus a couple of conveniences for help and an About dialog.
+
+  ```
+  wincopy <source> <target> [/a /d /h /n /r /s /u]
+  winmove <source> <target> [/a /d /h /n /r /s /u]
+  windel  <source>          [/a /d /h /n /s /u]
+  winren  <source> <target> [/a /h /r /u]
+  ```
+
+  Common switches:
+
+  - `/a`: show the About dialog
+  - `/h`: open `winutils.hlp`
+  - `/d`: include directories (recurse) instead of the default files-only behavior (`FOF_FILESONLY`)
+  - `/n`: answer yes to all prompts (`FOF_NOCONFIRMATION`)
+  - `/r`: rename on collision (`FOF_RENAMEONCOLLISION`)
+  - `/s`: silent, no progress dialog (`FOF_SILENT`)
+  - `/u`: allow undo via the Recycle Bin (`FOF_ALLOWUNDO`)
+
+  `windel` skips `/r` since there is no target to collide with, and `winren` keeps
+  only the switches that make sense for a rename: `/a`, `/h`, `/r`, and `/u`.
+
+  ## About those icons
+
+  At the time, even getting a custom icon onto an executable felt like a real
+  accomplishment. In reality I mostly cribbed pieces of existing Windows icons in
+  an icon editor and chopped them together until each utility had something that
+  looked at least passably its own. Not original art, but it gave each tool an
+  identity, and putting that final `.ico` on the EXE was the moment the program
+  felt finished.
+
+  <div className="not-prose mt-6 flex flex-wrap items-center gap-20">
+    <img src="/winutils/wincopy.png" alt="WinCopy icon" className="h-8 w-8 origin-center [image-rendering:pixelated] transition-transform duration-200 ease-out hover:scale-[5]" />
+    <img src="/winutils/windel.png" alt="WinDel icon" className="h-8 w-8 origin-center [image-rendering:pixelated] transition-transform duration-200 ease-out hover:scale-[5]" />
+    <img src="/winutils/winmove.png" alt="WinMove icon" className="h-8 w-8 origin-center [image-rendering:pixelated] transition-transform duration-200 ease-out hover:scale-[5]" />
+    <img src="/winutils/winren.png" alt="WinRen icon" className="h-8 w-8 origin-center [image-rendering:pixelated] transition-transform duration-200 ease-out hover:scale-[5]" />
+  </div>
+
+  ## And the help file
+
+  The `/h` switch opened `winutils.hlp`, and getting that file built was almost a
+  side project on its own. Windows Help in that era was not just a text file you
+  shipped. You wrote topics in RTF, defined a project in an `.HPJ` file, set up a
+  contents file (`.CNT`), and then ran the Help Compiler (`HCW` / `HCRTF`) to turn
+  all of it into a single `.HLP` binary. Cross-references, popup definitions, and
+  jumps were tagged with footnote codes inside the RTF, which meant most of the
+  work happened in Word with a very specific set of conventions.
+
+  None of it was forgiving. A wrong footnote or a mismatched context string would
+  silently open the wrong topic, and for a set of utilities this small, the help
+  project was one of the fiddliest parts of the whole release.
+
+  ## Getting it out there
+
+  There was no app store, no GitHub Releases, no `npm publish`. Distribution meant
+  zipping up the EXEs and the help file, writing a short description, and uploading
+  it to whatever shareware sites would take it: Tucows, Download.com, WinSite,
+  ZDNet, Simtel, and a long tail of smaller archives. Each one had its own
+  submission form and its own pace for actually listing your upload, sometimes days
+  or weeks later.
+
+  The feedback loop was checking back. I would dial in, click through to each
+  listing, and look at the download counter. Just a number that ticked up over time.
+  Every tick was a little microdose of joy: someone, somewhere, was actually running
+  my code.
+
+  ## Why now
+
+  I saw [Coreutils for Windows](https://news.ycombinator.com/item?id=48372853)
+  on Hacker News and it reminded me of this old project. I went digging to see
+  if I still had the original files. Turns out I did, so I pushed them up to
+  GitHub and wrote this down.
+
+  ## Worth the pain
+
+  An LLM could probably reproduce all of WinUtils in a few minutes today. Source,
+  switches, help file, icons, the whole thing. And that is fine. It lowers the floor
+  for getting something working.
+
+  But the pain was the point for me back then. Reading shell API docs on paper,
+  guessing at flags, fighting the help compiler, hand-tweaking icons one pixel at a
+  time, and waiting for a full rebuild to see if anything changed. None of it was
+  efficient, but every bit of it taught me something I still rely on.
+
+  <div className="mt-12 text-right text-sm text-paper/60">~codenaked</div>
+</div>
