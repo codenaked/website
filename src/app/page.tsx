@@ -1,26 +1,50 @@
-import Image from "next/image"
+import Link from "next/link"
+
+const posts = [
+  {
+    href: "/winutils",
+    title: "WinUtils: shell-powered CLI tools for Windows 95",
+    blurb:
+      "Looking back at a set of file utilities I built in 1996-1997 on top of SHFileOperation, plus the icons, help files, and shareware uploads that came with shipping software back then.",
+    meta: "1996-1997 / Windows 95 / C++",
+  },
+]
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-ink text-paper">
-      <div className="pointer-events-none absolute -left-32 top-10 h-72 w-72 rounded-full bg-lime/20 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-96 w-96 rounded-full bg-paper/10 blur-3xl" />
+    <main className="relative">
+      <section className="relative mx-auto w-full max-w-6xl px-6 pb-24 pt-20 sm:px-8 lg:px-12">
+        <div className="mb-6 flex items-baseline justify-between">
+          <h2 className="font-title text-2xl text-paper">Latest writing</h2>
+          <span className="text-xs uppercase tracking-[0.25em] text-paper/50">
+            {posts.length} {posts.length === 1 ? "post" : "posts"}
+          </span>
+        </div>
 
-      <section className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col items-center justify-center px-6 py-16 text-center sm:px-8 lg:px-12">
-        <p className="tracking-[0.35em] text-xs uppercase text-paper/60">Code Naked</p>
-
-        <Image
-          src="/codenaked-mascot.png"
-          alt="Code Naked mascot"
-          width={420}
-          height={420}
-          priority
-          className="mx-auto mt-8 w-60 drop-shadow-[0_18px_40px_rgba(0,0,0,0.45)] sm:w-[300px] lg:w-[360px]"
-        />
-
-        <h1 className="mt-8 font-title text-5xl leading-tight sm:text-6xl lg:text-7xl">
-          Coming Soon
-        </h1>
+        <ul className="grid gap-4">
+          {posts.map((post) => (
+            <li key={post.href}>
+              <Link
+                href={post.href}
+                className="group block rounded-2xl border border-paper/10 bg-paper/4 p-6 transition hover:border-lime/40 hover:bg-paper/6"
+              >
+                <p className="text-xs uppercase tracking-[0.25em] text-paper/50">
+                  {post.meta}
+                </p>
+                <h3 className="mt-3 font-title text-2xl text-paper transition group-hover:text-lime sm:text-3xl">
+                  {post.title}
+                </h3>
+                <p className="mt-3 text-base leading-7 text-paper/75">
+                  {post.blurb}
+                </p>
+                <span className="mt-4 inline-flex items-center gap-2 text-sm text-paper/70 transition group-hover:text-lime">
+                  Read post
+                  <span aria-hidden="true">→</span>
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
     </main>
   )
