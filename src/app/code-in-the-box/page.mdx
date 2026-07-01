@@ -1,0 +1,252 @@
+export const metadata = {
+  title: "Nobody Cares About the Code in the Box",
+  description:
+    "A CodeNaked essay about The Prestige, AI, intent-driven development, and why developers should move from producing code toward designing the trick.",
+}
+
+<div className="mx-auto max-w-4xl px-6 py-16 sm:px-8 lg:px-12">
+  <h1 className="not-prose font-title text-5xl leading-tight text-paper sm:text-6xl">
+    Nobody Cares About the Code
+    <span className="block">in the Box</span>
+  </h1>
+
+  <figure className="not-prose my-10 overflow-hidden rounded-lg border border-paper/10 bg-paper/5">
+    <img
+      src="/articles/code-in-the-box/hero.png"
+      alt="A theater stage with an empty magic box above hidden machinery and another box below the floor"
+      width="1672"
+      height="941"
+      className="aspect-[16/9] w-full object-cover"
+      fetchPriority="high"
+    />
+  </figure>
+
+  <div className="not-prose mt-8 text-lg leading-8 text-paper/80">
+    Every great magic trick has three acts.
+  </div>
+
+  First comes the pledge. The magician presents something plain and lets you believe
+  you understand it. A coin. A card. A locked box. Nothing suspicious, at least not
+  yet.
+
+  Then comes the turn. The ordinary thing refuses to stay ordinary. It disappears,
+  changes places, or behaves in a way it has no business behaving. This is where
+  everyone starts looking for the secret, which is funny, because most of us do not
+  really want a diagram. We want the feeling of being fooled.
+
+  But a disappearance is only half a trick. The hard part is bringing the thing back.
+  That last act is the prestige. The thing you thought was gone returns, and for a
+  second the room agrees to believe.
+
+  Software development has a similar arc. The pledge is intent: the human need, the
+  business rule, the outcome someone is hoping for. The turn is implementation: code,
+  configuration, data, services, tests, and all the hidden machinery that makes the
+  thing work. The prestige is the outcome: the user gets one of those small impossible
+  moments, like the first time Shazam names a song from a noisy room or your phone
+  identifies a house by simply taking a picture of it.
+
+  For a long time, code was where the mystery lived. Most people could see the result,
+  but not the mechanism. Developers understood the hidden machinery. The wand was a
+  keyboard. The cape was mostly a hoodie. The mystery still worked.
+
+  The better question is more practical: which parts of software work have been
+  hiding inside the box, waiting to become tools?
+
+  My bet is the code-shaped part. AI is getting good at producing the machinery:
+  endpoints, migrations, tests, glue code, little refactors, and the thousand boring
+  cuts that make a feature stand up. That machinery still matters. A trick with bad
+  machinery is just an accident with better lighting. But it changes where I want to
+  spend my judgment: defining intent, testing the result against reality, making
+  architectural calls, and asking whether the thing is worth building at all.
+
+  That is why I keep coming back to the phrase "the man in the box."
+
+  <div className="not-prose my-8 rounded-lg border border-paper/15 bg-paper/5 px-5 py-4 text-sm leading-6 text-paper/75">
+    <div className="mb-2 font-semibold text-paper">🏳️‍🌈 A quick note on language</div>
+    <p>
+      In <em>The Prestige</em>, "the man in the box" is the movie's wording. The
+      phrase is not meant to exclude anyone. Developers are women, men, nonbinary
+      people, and people with plenty of other ways of describing themselves. Here, it
+      means the hidden role in the trick.
+    </p>
+  </div>
+
+  For a long time, code was the thing in the box. Essential, but not the thing anyone
+  came to see. The audience was never there to admire the latch, the hinges, or the
+  joinery. They were there for the impossible moment.
+
+  Developers knew how the box worked. We knew where the trapdoor was, which latch
+  stuck in winter, and why one "small change" to the billing rules could break an
+  API contract, overload a SQL query, or wake up a workflow everyone thought had been
+  retired. That knowledge mattered. It still matters. But the box is changing.
+
+  ## The pledge
+
+  <figure className="not-prose my-8 overflow-hidden rounded-lg border border-paper/10 bg-paper/5">
+    <img
+      src="/articles/code-in-the-box/pledge.png"
+      alt="A closed magician's box on a theater stage with papers and faint code-like light nearby"
+      width="1672"
+      height="941"
+      className="aspect-[16/9] w-full object-cover"
+      loading="lazy"
+    />
+  </figure>
+
+  The pledge is intent. It is the ordinary thing we show up with before the machinery
+  starts moving: a business rule, a user need, a promise about how the software should
+  behave.
+
+  In real projects, the pledge is rarely a neat sentence in a ticket, no matter how
+  many systems we use to pretend otherwise. We have put it in Jira tickets, GitHub
+  issues, kanban cards, user stories, acceptance criteria, and meeting notes with
+  dates in the filename. Then someone says, "Can we just..." and the room slowly
+  discovers that "just" is doing a lot of cardio.
+
+  This is where experienced developers earn their keep before writing a line of code.
+  We ask what should happen, what must not happen, who depends on the current behavior,
+  and which part of the system will wake up angry if we touch it. We remind people
+  that the simple screen has a batch job behind it, that the API has outside callers,
+  that the report nobody loves is still how finance closes the month.
+
+  The pledge is also where we name what is easy, what is hard, and what is merely
+  pretending to be easy because nobody has looked behind the curtain yet. That work
+  used to feel like prelude. Increasingly, I think it is the durable part.
+
+  ## The turn
+
+  <figure className="not-prose my-8 overflow-hidden rounded-lg border border-paper/10 bg-paper/5">
+    <img
+      src="/articles/code-in-the-box/turn.png"
+      alt="An open magic box on a theater stage with teal light flowing from hidden machinery below"
+      width="1672"
+      height="941"
+      className="aspect-[16/9] w-full object-cover"
+      loading="lazy"
+    />
+  </figure>
+
+  The turn is implementation. It is where intent becomes code, configuration, data,
+  tests, services, and all the other machinery that makes software move.
+
+  For decades, code was where intent finally became real, so we treated it like the
+  main event. We wrote it, organized it, argued about it, reviewed it, and renamed
+  things until the naming debate had its own weather system. We argued over tabs
+  versus spaces as if civilization depended on the outcome.
+
+  I used to obsess over alphabetizing methods. At the time, I honestly thought my OCD
+  made me a better developer. I also treated duplicate code like a moral failure. Some
+  of that discipline helped. Some of it was just me trying to make the file look sane
+  because the business rules would not return the favor.
+
+  Tooling changed that. Formatters made my formatting opinions less interesting. IDEs
+  made some organization habits obsolete. Static analysis caught things I used to hunt
+  by hand. I did not stop caring about craft. The reason I cared changed.
+
+  Code still matters because it is where intent becomes executable. It is the
+  machinery that either honors the promise or quietly mutates it into something else.
+  But software value was never really the code. The value is what the software lets
+  someone do: find the right house from a photo, move money without thinking about
+  bank rails, buy something in two taps, flag a risky transaction, or turn a messy
+  support thread into a useful answer.
+
+  AI changes the bargain because it can produce more of the machinery. Boilerplate,
+  migrations, endpoints, tests, mocks, glue code, the stuff nobody wants to admit
+  consumes half a sprint. If your identity is built entirely on typing those things
+  into existence, that is going to feel threatening. I get it.
+
+  But the scarce work moves upward. What are we trying to accomplish? What are we not
+  allowed to break? What risks are hiding behind the happy path? What does "done"
+  mean when the demo works but reconciliation is wrong by 0.3%?
+
+  That is why intent has to become more durable. None of this is brand new.
+  Behavior-Driven Development, Specification by Example, executable specifications,
+  and living documentation have all been circling the same idea: make behavior
+  understandable before, during, and after the code exists.
+
+  Intent-Driven Development is the useful label here because it puts the weight in the
+  right place. The durable artifacts are acceptance criteria, business rules, behavior
+  descriptions, risk notes, migration plans, and PR summaries written clearly enough
+  that humans can challenge them and AI can consume them. Not prose as decoration.
+  Prose as an artifact.
+
+  Tests and pull requests have to follow that shift. Unit tests still matter, but if
+  AI can write both the implementation and the tests, the test suite is no longer the
+  highest-trust artifact by itself. Human-readable intent has to sit above it. And in
+  a 127-file AI-assisted PR, the review cannot just be, "Did every line look okay?"
+  It has to ask, "What is the software supposed to do now?"
+
+  <div className="not-prose my-8 rounded-lg border border-paper/15 bg-paper/5 px-5 py-4 text-sm leading-6 text-paper/75">
+    <div className="mb-2 font-semibold text-paper">Clean code is cheaper code</div>
+    <p>
+      Clean code still matters because it gives humans and AI less ambiguity to work
+      through. Fewer misleading names, dead paths, duplicate ideas, and surprise side
+      effects means less machinery to inspect before changing the system.
+    </p>
+  </div>
+
+  The craft is still there. It just moved.
+
+  ## The prestige
+
+  <figure className="not-prose my-8 overflow-hidden rounded-lg border border-paper/10 bg-paper/5">
+    <img
+      src="/articles/code-in-the-box/prestige.png"
+      alt="An open magic box on a theater stage releasing warm light and abstract symbols of useful outcomes"
+      width="1672"
+      height="941"
+      className="aspect-[16/9] w-full object-cover"
+      loading="lazy"
+    />
+  </figure>
+
+  The prestige is the outcome. The vanished thing comes back. The audience gets the
+  impossible moment.
+
+  In software, the prestige is not the pull request. It is not the green build.
+  It is not the beautifully factored service with the tasteful interface names, though
+  I do appreciate those more than is probably healthy.
+
+  The prestige is the user getting the outcome they needed. An app names the song,
+  moves the money, calls the ride, or identifies the house. The system reflects
+  reality closely enough that someone can trust it and move on.
+
+  That is the magic. Nobody applauds the trapdoor. Nobody remembers the code in the
+  box.
+
+  And in _The Prestige_, if you remember what happens around that box, the image is
+  hard to shake. The water does not care how essential the role was.
+
+  The hidden labor still matters. Someone has to understand the machinery. Someone
+  has to know when the shortcut is about to bend the system into a shape it will
+  regret later.
+
+  I still care about code. I care about names, boundaries, tests, cohesion, and all
+  the little choices that make software either supple or miserable. I will probably
+  still alphabetize something now and then when nobody is looking.
+
+  I just spend less of my attention there now. More of it belongs in defining the
+  intent, validating the outcome, and making the architectural calls that keep the
+  system honest. I want to understand what the business is actually trying to do,
+  especially when the ticket does not. I want to make sure the trick is worth
+  performing.
+
+  The audience remembers the magic. They remember the impossible thing. They remember
+  the moment the vanished object returns and the room briefly agrees to believe.
+
+  <blockquote className="not-prose my-8 rounded-lg border-l-4 border-gold bg-paper/5 px-5 py-4 text-paper/85">
+    <p className="font-title text-2xl leading-snug">
+      "I'm an ingénieur. I design illusions and construct the apparatus necessary for
+      performing them."
+    </p>
+    <footer className="mt-3 text-sm text-paper/55">John Cutter</footer>
+  </blockquote>
+
+  Software engineers are not really the magician at center stage. We are the ones who
+  design and build the apparatus, who understand the mechanism, the load, the timing,
+  and why the trick is worth doing at all. If AI wants the code in the box, fine. Let
+  it. I want to design the trick, define the intent, and make damn sure that when the
+  curtain falls, what comes back is the thing we actually meant to build.
+
+  <div className="mt-12 text-right text-sm text-paper/60">~codenaked</div>
+</div>

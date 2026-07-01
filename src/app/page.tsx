@@ -2,6 +2,13 @@ import Link from "next/link"
 
 const posts = [
   {
+    href: "/code-in-the-box",
+    title: "Nobody Cares About the Code in the Box",
+    blurb:
+      "A look at AI, The Prestige, and why developer value is moving from writing every line toward defining intent, validating outcomes, and designing the trick.",
+    meta: "2026 / AI / Architecture",
+  },
+  {
     href: "/winutils",
     title: "WinUtils: shell-powered CLI tools for Windows 95",
     blurb:
